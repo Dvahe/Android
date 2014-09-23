@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#000000"
+    android:padding="10dp"
+    >
+    
+<!-- Provider -->
+    <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:background="#100000">   
+	    <TextView android:id="@+id/valueProvider" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Provider:" android:gravity="center_horizontal" android:textColor="#ffffff" android:textSize="17sp"/>
+    </RelativeLayout >
+    
+<!--Latitude-->
+	<RelativeLayout android:layout_width="wrap_content" android:layout_marginTop="10sp" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/tvLatitude" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Latitude" android:textColor="#ffffff" android:textSize="17sp" android:layout_marginLeft="?android:attr/expandableListPreferredItemPaddingLeft"/>
+	    <TextView android:id="@+id/valueLatitude" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Value" android:gravity="right" android:textColor="#ffffff" android:textSize="17sp" />
+ 	 </RelativeLayout>
+<!-- Longitude-->
+	<RelativeLayout android:layout_width="wrap_content" android:layout_marginTop="10sp" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/tvLongitude" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Longitude" android:textColor="#ffffff" android:textSize="17sp" android:layout_marginLeft="?android:attr/expandableListPreferredItemPaddingLeft"/>
+	    <TextView android:id="@+id/valueLongitude" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Value" android:gravity="right" android:textColor="#ffffff" android:textSize="17sp" />
+	  </RelativeLayout>
+<!-- Accuracy-->
+	<RelativeLayout android:layout_width="wrap_content" android:layout_marginTop="10sp" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/tvAcurracy" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Accuracy" android:textColor="#ffffff" android:textSize="17sp" android:layout_marginLeft="?android:attr/expandableListPreferredItemPaddingLeft"/>
+	    <TextView android:id="@+id/valueAccuracy" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Value" android:gravity="right" android:textColor="#ffffff" android:textSize="17sp" />
+ 	 </RelativeLayout>	  
+<!-- Altitude-->
+	  <RelativeLayout android:layout_width="wrap_content" android:layout_marginTop="10sp" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/tvAltitude" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Altitude" android:textColor="#ffffff" android:textSize="17sp" android:layout_marginLeft="?android:attr/expandableListPreferredItemPaddingLeft"/>
+	    <TextView android:id="@+id/valueAltitude" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Value" android:gravity="right" android:textColor="#ffffff" android:textSize="17sp" />
+ 	 </RelativeLayout>	 
+<!-- Bearing -->
+	  <RelativeLayout android:layout_width="wrap_content" android:layout_marginTop="10sp" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/tvBearing" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bearing" android:textColor="#ffffff" android:textSize="17sp" android:layout_marginLeft="?android:attr/expandableListPreferredItemPaddingLeft"/>
+	    <TextView android:id="@+id/valueBearing" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Value" android:gravity="right" android:textColor="#ffffff" android:textSize="17sp" />
+ 	 </RelativeLayout>	 
+<!-- Speed -->
+	  <RelativeLayout android:layout_width="wrap_content" android:layout_marginTop="10sp" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/tvSpeed" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Speed" android:textColor="#ffffff" android:textSize="17sp" android:layout_marginLeft="?android:attr/expandableListPreferredItemPaddingLeft"/>
+	    <TextView android:id="@+id/valueSpeed" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Value" android:gravity="right" android:textColor="#ffffff" android:textSize="17sp" />
+ 	 </RelativeLayout>	 
+<!-- Address -->
+	  <RelativeLayout android:layout_width="wrap_content" android:layout_marginTop="10sp" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/tvAddress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Address" android:textColor="#ffffff" android:textSize="17sp" android:layout_marginLeft="?android:attr/expandableListPreferredItemPaddingLeft"/>
+	    <TextView android:id="@+id/valueAddress" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Value" android:gravity="right" android:textColor="#ffffff" android:textSize="17sp" />
+ 	 </RelativeLayout>	
+<!-- Button Get Location --> 	 
+	 <Button 
+	     android:id="@+id/GetLocation"
+	     android:text="Get Location"
+	     android:layout_width="fill_parent"
+	     android:layout_height="wrap_content"
+	     android:textColor="#ffffff"
+	     android:textSize="17sp"
+	     android:layout_marginTop="30dp"
+	     />
+</LinearLayout>
+

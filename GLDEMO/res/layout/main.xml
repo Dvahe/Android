@@ -1,0 +1,48 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    
+    tools:context="am.mapdemo.map.MainActivity" >
+
+    
+<LinearLayout 
+    android:id="@+id/head"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000"
+    android:orientation="vertical">
+    
+    <Button android:id="@+id/getlocation"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Get Location"
+    android:textColor="#ffffff"
+    android:textSize="17sp"
+    android:layout_below="@+id/framelay"/>
+    
+<!-- Provider -->
+    <RelativeLayout android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:background="#100000">   
+	    <TextView android:id="@+id/valueProvider" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Provider:" android:gravity="center_horizontal" android:textColor="#ffffff" android:textSize="17sp"/>
+    </RelativeLayout >
+<!--Latitude-->
+	<RelativeLayout android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:layout_width="wrap_content" android:layout_marginTop="3sp" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/tvLatitude" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Latitude" android:textColor="#ffffff" android:textSize="17sp"/>
+	    <TextView android:id="@+id/valueLatitude" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Value" android:gravity="right" android:textColor="#ffffff" android:textSize="17sp" />
+ 	 </RelativeLayout>
+<!-- Longitude-->
+	<RelativeLayout android:layout_marginBottom="15dp" android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:layout_width="wrap_content" android:layout_marginTop="3sp" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/tvLongitude" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Longitude" android:textColor="#ffffff" android:textSize="17sp" />
+	    <TextView android:id="@+id/valueLongitude" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Value" android:gravity="right" android:textColor="#ffffff" android:textSize="17sp" />
+	  </RelativeLayout>
+</LinearLayout>
+    <fragment
+        android:layout_below="@+id/head"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</RelativeLayout>

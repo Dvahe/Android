@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="am.mapdemo.map.MainActivity" >
+    
+   
+    <!-- Location Found / will display always --> 
+    <item android:id="@+id/action_location_found_by_GPS"
+          android:icon="@drawable/ic_action_location_found"
+          android:title="@string/action_location_found"
+          android:showAsAction="ifRoom"
+           />
+     
+    <!-- Get Location by network / will display always -->
+    <item android:id="@+id/action_location_found_by_Network"
+          android:icon="@drawable/ic_action_network_wifi"
+          android:title="@string/action_network_wif"
+          android:showAsAction="always" /> 
+          
+    <!-- list / will display always -->
+    <item android:id="@+id/action_list_val"
+          android:icon="@drawable/ic_action_view_as_list"
+          android:title="@string/action_refresh"
+          android:showAsAction="always" />
+    
+    <!-- Help -->
+    <item android:id="@+id/action_help"
+          android:icon="@drawable/ic_action_help"
+          android:title="@string/action_help"
+          android:showAsAction="never"/>
+
+</menu>

@@ -56,13 +56,12 @@ public class LocationTracker  implements LocationListener {
 			this.canGetLocation = true;
 			// First get location from GPS Provider
 			if(isGpsenabled){
-				for(int i = 0; null == mLocation || i < 10*1000; ++i){
+				for(int i = 0; i < 10*1000; ++i){
 				mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 				if(null != mLocationManager){
 					mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 				}
 			}
-				}
 			}
 			// if Network Enabled get location using Network Services
 			if(isNetworkEnabled){
@@ -72,6 +71,7 @@ public class LocationTracker  implements LocationListener {
 						mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 					}
 				}
+			}
 		}
 		if(null != mLocation){
 			longitude = mLocation.getLongitude();

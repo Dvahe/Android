@@ -44,9 +44,9 @@ private void updateUI()
 	//connect to provider and update User interface
     private void connectprovider()
     {
-    	locTracker = new LocationTracker(GLlist.this);
+    	locTracker = LocationTracker.GetInstance(GLlist.this);
     	locTracker.getLocation();
-         myHandler.post(updateRunnable);
+        myHandler.post(updateRunnable);
     }
     
     //initialization of variables
@@ -59,8 +59,7 @@ private void updateUI()
          altitude = (TextView)findViewById(R.id.valueAltitude);
          bearing = (TextView)findViewById(R.id.valueBearing);
          speed = (TextView)findViewById(R.id.valueSpeed);
-         address = (TextView)findViewById(R.id.valueAddress);
-        
+         address = (TextView)findViewById(R.id.valueAddress); 
     }
     
 	@Override
@@ -82,8 +81,7 @@ private void updateUI()
 					connectprovider();
 				}
 			});
-			thread.start();
-				
+			thread.start();	
 			}
 		});
 	}

@@ -98,7 +98,7 @@ private void showSettingsAlert(){
 	//connect to provider and update User interface
     private void connectprovider()
     {
-    	locTracker = new LocationTracker(MainActivity.this);
+    	locTracker = LocationTracker.GetInstance(MainActivity.this);
     	locTracker.getLocation();
          myHandler.post(updateRunnable);
     }
@@ -127,7 +127,6 @@ private void showSettingsAlert(){
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
-					
 					Looper.prepare();
 					connectprovider();
 				}
@@ -141,7 +140,7 @@ private void showSettingsAlert(){
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		  inflater.inflate(R.menu.main, menu);
+		inflater.inflate(R.menu.main, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -149,10 +148,10 @@ private void showSettingsAlert(){
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_location_found_by_GPS:
-			
+			LocationTracker.setProviderName("GPS");
 			return true;
 		case R.id.action_location_found_by_Network:
-			
+			LocationTracker.setProviderName("NetWork");
 			return true;
 			
 		case R.id.action_list_val:

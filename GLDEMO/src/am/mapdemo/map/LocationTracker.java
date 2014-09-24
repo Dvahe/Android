@@ -2,43 +2,75 @@ package am.mapdemo.map;
 
 import java.util.List;
 import java.util.Locale;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 
 public class LocationTracker  implements LocationListener {
 	private Location mLocation;
 		// Declaring a Location Manager
 	private LocationManager mLocationManager;
-	private Context mContext;
+	private static Context mContext;
 	private Double longitude, latitude, altitude;
 	private Float accuracy, speed, bearing;
 	private boolean isGpsenabled = false;// flag for GPS status
 	private boolean isNetworkEnabled = false; // flag for network status
 	private boolean canGetLocation = false;
 	private String provider, addresses, city, country;
-	private Integer count_of_satelites = 0;
+	private Integer count_of_providers = 0;
+	private static String ProviderName;
 			//for getting address of current location
-	private Geocoder mGeocoder;
+	private static Geocoder mGeocoder;
 	private List<Address> maddresses;
 				// The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 0 meters
     			// The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 0; // 0 minute
+    
+    private static LocationTracker mLocationTracker;
  
-	public LocationTracker(Context context){
-		mContext = context;
-		mGeocoder = new Geocoder(mContext, Locale.getDefault());
+	 public static LocationTracker GetInstance(Context context){
+		if(null == mLocationTracker){
+			synchronized (LocationTracker.class) {
+				  if(null == mLocationTracker){
+					  mContext = context;
+						mGeocoder = new Geocoder(mContext, Locale.getDefault());
+						mLocationTracker = new LocationTracker();
+				  }
+			}
+		}
+		return mLocationTracker;
 	}
 	
+    private LocationTracker(){
+    	
+    }
+	
+    public static void setProviderName(final String provider){
+    	ProviderName = provider; 
+    }
+    
+    public void UseOnlyGPS(){
+    	for(int i = 0;  i < 10*1000; ++i){
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+			if(null != mLocationManager){
+				mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			}
+    	}
+    	stopUsingGPS();
+    }
+    
+    public void UseOnlyNETWORK(){
+    	mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+		if(null != mLocationManager){
+			mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		}
+    }
+    
 	public Location getLocation(){
 		mLocationManager = (LocationManager)mContext.getSystemService(Context.LOCATION_SERVICE);
 		if(null != mLocationManager){
@@ -50,45 +82,45 @@ public class LocationTracker  implements LocationListener {
 		
 		if(!isGpsenabled && !isNetworkEnabled ){
 			// no network provider is enabled
-			showSettingsAlert();
 		}else{
 			
 			this.canGetLocation = true;
-			// First get location from GPS Provider
-			if(isGpsenabled){
-				for(int i = 0; i < 10*1000; ++i){
-				mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-				if(null != mLocationManager){
-					mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		if("GPS" == ProviderName){
+			UseOnlyGPS();
+		}else{
+			if("NetWork" == ProviderName){
+				UseOnlyNETWORK();
+			}else{
+				// First get location from GPS Provider
+				if(isGpsenabled){
+					UseOnlyGPS();
 				}
-			}
-			}
-			// if Network Enabled get location using Network Services
-			if(isNetworkEnabled){
-				if(null == mLocation){
-					mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-					if(null != mLocationManager){
-						mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				// if Network Enabled get location using Network Services
+				if(isNetworkEnabled){
+					if(null == mLocation){
+						UseOnlyNETWORK();
 					}
 				}
 			}
-		}
-		if(null != mLocation){
-			longitude = mLocation.getLongitude();
-			latitude = mLocation.getLatitude();
-			altitude = mLocation.getAltitude();
-			provider = mLocation.getProvider();
-			accuracy = mLocation.getAccuracy();
-			speed = mLocation.getSpeed();
-			bearing = mLocation.getBearing();
-			count_of_satelites = mLocationManager.getAllProviders().size();
-			try {
-				maddresses = mGeocoder.getFromLocation(latitude, longitude, 1);
-			} catch (Exception e) {
-				e.printStackTrace();
+			if(null != mLocation){
+				longitude = mLocation.getLongitude();
+				latitude = mLocation.getLatitude();
+				altitude = mLocation.getAltitude();
+				provider = mLocation.getProvider();
+				accuracy = mLocation.getAccuracy();
+				speed = mLocation.getSpeed();
+				bearing = mLocation.getBearing();
+				count_of_providers = mLocationManager.getAllProviders().size();
+				try {
+					maddresses = mGeocoder.getFromLocation(latitude, longitude, 1);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+				
 			}
 		}
-			stopUsingGPS();
+			
 		return mLocation;
 	}
 	
@@ -185,42 +217,9 @@ public class LocationTracker  implements LocationListener {
 	}
 				//returns count of providers
 	public Integer getCountSatelites(){
-		return count_of_satelites;
+		return count_of_providers;
 	}
-	/**
-     * Function to show settings alert dialog
-     * */
-	private void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-      
-        // Setting Dialog Title
-        alertDialog.setTitle("GPS is settings");
-  
-        // Setting Dialog Message
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
-  
-        // Setting Icon to Dialog
-        //alertDialog.setIcon(R.drawable.delete);
-  
-        // On pressing Settings button
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mContext.startActivity(intent);
-            }
-        });
-  
-        // on pressing cancel button
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            dialog.cancel();
-            }
-        });
-  
-        // Showing Alert Message
-        alertDialog.show();
-    }
-
+	
 	/**
      * Stop using GPS listener
      * Calling this function will stop using GPS in your app

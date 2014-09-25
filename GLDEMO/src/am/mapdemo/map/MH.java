@@ -35,7 +35,7 @@ protected abstract  void updateUI();
 	//connect to provider and update User interface
     private void connectprovider()
     {
-    	locTracker = new LocationTracker(mContext);
+    	locTracker = LocationTracker.GetInstance(mContext);
     	locTracker.getLocation();
         myHandler.post(updateRunnable);
     }

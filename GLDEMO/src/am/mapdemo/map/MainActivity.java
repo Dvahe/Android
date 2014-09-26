@@ -148,10 +148,10 @@ private void showSettingsAlert(){
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_location_found_by_GPS:
-			LocationTracker.setProviderName("GPS");
+			LocationTracker.setProviderName(LocationTracker.NETWORK);
 			return true;
 		case R.id.action_location_found_by_Network:
-			LocationTracker.setProviderName("NetWork");
+			LocationTracker.setProviderName(LocationTracker.NETWORK);
 			return true;
 			
 		case R.id.action_list_val:

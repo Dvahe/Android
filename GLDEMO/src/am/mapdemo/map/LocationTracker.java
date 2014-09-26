@@ -32,7 +32,11 @@ public class LocationTracker  implements LocationListener {
     private static final long MIN_TIME_BW_UPDATES = 0; // 0 minute
     
     private static LocationTracker mLocationTracker;
- 
+    public static String GPS = "GPS", NETWORK = "NETWORK";
+    
+    
+    
+    
 	 public static LocationTracker GetInstance(Context context){
 		if(null == mLocationTracker){
 			synchronized (LocationTracker.class) {
@@ -55,13 +59,23 @@ public class LocationTracker  implements LocationListener {
     }
     
     public void UseOnlyGPS(){
-    	for(int i = 0; null!= mLocation || i < 10*1000; ++i){
-			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-			if(null != mLocationManager){
-				mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-			}
-    	}
-    	stopUsingGPS();
+   
+				int count = 10;
+				while(null == mLocation && 0 != count){
+					--count;
+					mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, LocationTracker.this);
+					if(null != mLocationManager){
+						mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+					}
+					try {
+						Thread.currentThread().sleep(10000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				stopUsingGPS();
+    	
     }
     
     public void UseOnlyNETWORK(){
@@ -85,10 +99,10 @@ public class LocationTracker  implements LocationListener {
 		}else{
 			
 			this.canGetLocation = true;
-		if("GPS" == ProviderName){
+		if(GPS == ProviderName){
 			UseOnlyGPS();
 		}else{
-			if("NetWork" == ProviderName){
+			if(NETWORK == ProviderName){
 				UseOnlyNETWORK();
 			}else{
 				// First get location from GPS Provider
@@ -219,7 +233,6 @@ public class LocationTracker  implements LocationListener {
 	public Integer getCountSatelites(){
 		return count_of_providers;
 	}
-	
 	/**
      * Stop using GPS listener
      * Calling this function will stop using GPS in your app
